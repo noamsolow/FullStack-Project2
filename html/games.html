@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub - Choose Your Game</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/games.css">
+</head>
+<body>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- User Stats Section -->
+        <section class="user-stats-section">
+            <div class="container">
+                <h2>Your Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-info">
+                            <h3 id="totalGamesPlayed">0</h3>
+                            <p>Games Played</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-info">
+                            <h3 id="totalWins">0</h3>
+                            <p>Total Wins</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-info">
+                            <h3 id="highestScore">0</h3>
+                            <p>Highest Score</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎖️</div>
+                        <div class="stat-info">
+                            <h3 id="achievementCount">0</h3>
+                            <p>Achievements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Games Grid Section -->
+        <section class="games-section">
+            <div class="container">
+                <h2>Choose Your Game</h2>
+                <div class="games-grid">
+                    <!-- Game 1 - Active -->
+                    <div class="game-card active" data-game="game1">
+                        <div class="game-card-header">
+                            <img src="../media/images/game1/thumbnail.png" alt="Game 1" class="game-thumbnail">
+                            <div class="game-badge">NEW</div>
+                        </div>
+                        <div class="game-card-body">
+                            <h3>Dodge Master</h3>
+                            <p>Test your reflexes! Dodge falling obstacles and survive as long as you can.</p>
+                            <div class="game-stats">
+                                <span> Played: <span id="game1Played">0</span></span>
+                                <span>⭐ Best: <span id="game1Best">0</span></span>
+                            </div>
+                        </div>
+                        <div class="game-card-footer">
+                            <button class="btn btn-primary play-btn" data-game="game1">Play Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Game 2 - Active -->
+                    <div class="game-card active" data-game="game2">
+                        <div class="game-card-header">
+                            <img src="../media/images/game2/thumbnail.png" alt="Game 2" class="game-thumbnail">
+                            <div class="game-badge">NEW</div>
+                        </div>
+                        <div class="game-card-body">
+                            <h3>Brain Teaser</h3>
+                            <p>Challenge your mind with this strategic puzzle game. Think ahead to win!</p>
+                            <div class="game-stats">
+                                <span>🎮 Played: <span id="game2Played">0</span></span>
+                                <span>⭐ Best: <span id="game2Best">0</span></span>
+                            </div>
+                        </div>
+                        <div class="game-card-footer">
+                            <button class="btn btn-primary play-btn" data-game="game2">Play Now</button>
+                        </div>
+                    </div>
+
+                    <!-- Game 3 - Coming Soon -->
+                    <div class="game-card disabled">
+                        <div class="game-card-header">
+                            <div class="game-thumbnail-placeholder">
+                                <span>?</span>
+                            </div>
+                            <div class="game-badge coming-soon">Coming Soon</div>
+                        </div>
+                        <div class="game-card-body">
+                            <h3>Mystery Game 3</h3>
+                            <p>Something exciting is cooking... Stay tuned!</p>
+                        </div>
+                    </div>
+
+                    <!-- Game 4 - Coming Soon -->
+                    <div class="game-card disabled">
+                        <div class="game-card-header">
+                            <div class="game-thumbnail-placeholder">
+                                <span>?</span>
+                            </div>
+                            <div class="game-badge coming-soon">Coming Soon</div>
+                        </div>
+                        <div class="game-card-body">
+                            <h3>Mystery Game 4</h3>
+                            <p>More fun games are on the way!</p>
+                        </div>
+                    </div>
+
+                    <!-- Game 5 - Coming Soon -->
+                    <div class="game-card disabled">
+                        <div class="game-card-header">
+                            <div class="game-thumbnail-placeholder">
+                                <span>?</span>
+                            </div>
+                            <div class="game-badge coming-soon">Coming Soon</div>
+                        </div>
+                        <div class="game-card-body">
+                            <h3>Mystery Game 5</h3>
+                            <p>We're working hard to bring you more entertainment!</p>
+                        </div>
+                    </div>
+
+                    <!-- Game 6 - Coming Soon -->
+                    <div class="game-card disabled">
+                        <div class="game-card-header">
+                            <div class="game-thumbnail-placeholder">
+                                <span>?</span>
+                            </div>
+                            <div class="game-badge coming-soon">Coming Soon</div>
+                        </div>
+                        <div class="game-card-body">
+                            <h3>Mystery Game 6</h3>
+                            <p>Amazing games coming your way soon!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-section">
+            <div class="container">
+                <h2>🏆 Leaderboard</h2>
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" data-game="game1">Dodge Master</button>
+                    <button class="tab-btn" data-game="game2">Brain Teaser</button>
+                </div>
+                <div class="leaderboard-content">
+                    <table class="leaderboard-table" id="leaderboardTable">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Player</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody">
+                            <!-- Will be populated by JavaScript -->
+                            <tr>
+                                <td colspan="4" class="no-data">No scores yet. Be the first to play!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Game Hub. Created by [Your Name] & Yuval Yehoshua</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/utils/auth.js"></script>
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/components/userStats.js"></script>
+    <script src="../js/games/gamesMenu.js"></script>
+</body>
+</html>

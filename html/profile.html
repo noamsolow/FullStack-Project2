@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Game Hub</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+
+    <!-- Main Content -->
+    <main class="profile-content">
+        <div class="container">
+            
+            <!-- Profile Header -->
+            <section class="profile-header">
+                <div class="profile-avatar">
+                    <div class="avatar-circle">
+                        <span id="avatarInitial">?</span>
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <h1 id="profileUsername">Username</h1>
+                    <p class="profile-email" id="profileEmail">email@example.com</p>
+                    <p class="member-since">
+                        Member since: <span id="memberSince">-</span>
+                    </p>
+                    <p class="last-login">
+                        Last login: <span id="lastLogin">-</span>
+                    </p>
+                </div>
+                <div class="profile-actions">
+                    <button id="editProfileBtn" class="btn btn-secondary">✏️ Edit Profile</button>
+                </div>
+            </section>
+
+            <!-- Overall Stats -->
+            <section class="stats-section">
+                <h2>📊 Overall Statistics</h2>
+                <div class="stats-grid-large">
+                    <div class="stat-card-large">
+                        <div class="stat-icon-large">🎮</div>
+                        <div class="stat-details">
+                            <h3 id="totalGamesPlayed">0</h3>
+                            <p>Total Games Played</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-large">
+                        <div class="stat-icon-large">🏆</div>
+                        <div class="stat-details">
+                            <h3 id="totalWins">0</h3>
+                            <p>Total Wins</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-large">
+                        <div class="stat-icon-large">⭐</div>
+                        <div class="stat-details">
+                            <h3 id="totalScore">0</h3>
+                            <p>Total Score</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-large">
+                        <div class="stat-icon-large">🎖️</div>
+                        <div class="stat-details">
+                            <h3 id="achievementCount">0</h3>
+                            <p>Achievements</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Game-Specific Stats -->
+            <section class="game-stats-section">
+                <h2>🎯 Game Statistics</h2>
+                
+                <!-- Game 1 Stats -->
+                <div class="game-stat-card">
+                    <div class="game-stat-header">
+                        <h3>🚀 Dodge Master</h3>
+                        <a href="game1.html" class="btn btn-primary btn-sm">Play Now</a>
+                    </div>
+                    <div class="game-stat-body">
+                        <div class="stat-row">
+                            <span class="stat-label">Games Played:</span>
+                            <span class="stat-value" id="game1Played">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Games Won:</span>
+                            <span class="stat-value" id="game1Won">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">High Score:</span>
+                            <span class="stat-value highlight" id="game1HighScore">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Total Score:</span>
+                            <span class="stat-value" id="game1TotalScore">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value" id="game1BestStreak">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Last Played:</span>
+                            <span class="stat-value" id="game1LastPlayed">Never</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 2 Stats -->
+                <div class="game-stat-card">
+                    <div class="game-stat-header">
+                        <h3>🧠 Brain Teaser</h3>
+                        <a href="game2.html" class="btn btn-primary btn-sm">Play Now</a>
+                    </div>
+                    <div class="game-stat-body">
+                        <div class="stat-row">
+                            <span class="stat-label">Games Played:</span>
+                            <span class="stat-value" id="game2Played">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Games Won:</span>
+                            <span class="stat-value" id="game2Won">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">High Score:</span>
+                            <span class="stat-value highlight" id="game2HighScore">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Total Score:</span>
+                            <span class="stat-value" id="game2TotalScore">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Best Streak:</span>
+                            <span class="stat-value" id="game2BestStreak">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Last Played:</span>
+                            <span class="stat-value" id="game2LastPlayed">Never</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section class="achievements-section">
+                <h2>🏅 Achievements</h2>
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Achievements will be populated by JavaScript -->
+                    <div class="achievement-badge locked">
+                        <div class="badge-icon">🎯</div>
+                        <div class="badge-info">
+                            <h4>First Victory</h4>
+                            <p>Win your first game</p>
+                        </div>
+                    </div>
+                    <div class="achievement-badge locked">
+                        <div class="badge-icon">⚡</div>
+                        <div class="badge-info">
+                            <h4>Speed Demon</h4>
+                            <p>Reach level 5 in Dodge Master</p>
+                        </div>
+                    </div>
+                    <div class="achievement-badge locked">
+                        <div class="badge-icon">🏆</div>
+                        <div class="badge-info">
+                            <h4>Champion</h4>
+                            <p>Score over 1000 points</p>
+                        </div>
+                    </div>
+                    <div class="achievement-badge locked">
+                        <div class="badge-icon">🎮</div>
+                        <div class="badge-info">
+                            <h4>Dedicated Player</h4>
+                            <p>Play 10 games</p>
+                        </div>
+                    </div>
+                    <div class="achievement-badge locked">
+                        <div class="badge-icon">💯</div>
+                        <div class="badge-info">
+                            <h4>Perfectionist</h4>
+                            <p>Complete a game without losing a life</p>
+                        </div>
+                    </div>
+                    <div class="achievement-badge locked">
+                        <div class="badge-icon">🔥</div>
+                        <div class="badge-info">
+                            <h4>On Fire</h4>
+                            <p>Win 5 games in a row</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <h2>📅 Recent Activity</h2>
+                <div class="activity-list" id="activityList">
+                    <!-- Activity will be populated by JavaScript -->
+                    <div class="activity-item">
+                        <div class="activity-icon">🎮</div>
+                        <div class="activity-details">
+                            <p class="activity-text">No recent activity</p>
+                            <span class="activity-time">Start playing to see your activity!</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Account Actions -->
+            <section class="account-actions">
+                <h2>⚙️ Account Settings</h2>
+                <div class="actions-grid">
+                    <button class="action-btn" id="exportDataBtn">
+                        <span class="action-icon">📥</span>
+                        <span class="action-text">Export Data</span>
+                    </button>
+                    <button class="action-btn" id="clearStatsBtn">
+                        <span class="action-icon">🗑️</span>
+                        <span class="action-text">Clear Statistics</span>
+                    </button>
+                    <button class="action-btn danger" id="deleteAccountBtn">
+                        <span class="action-icon">⚠️</span>
+                        <span class="action-text">Delete Account</span>
+                    </button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Game Hub. Created by [Your Name] & Yuval Yehoshua</p>
+        </div>
+    </footer>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✏️ Edit Profile</h2>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label for="editUsername">Username:</label>
+                        <input type="text" id="editUsername" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email:</label>
+                        <input type="email" id="editEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFirstName">First Name:</label>
+                        <input type="text" id="editFirstName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Last Name:</label>
+                        <input type="text" id="editLastName" class="form-control">
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/utils/auth.js"></script>
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/profile/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodge Master - Game Hub</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/game1.css">
+</head>
+<body>
+    <!-- Game Container -->
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="header-left">
+                <button id="backBtn" class="btn btn-secondary">← Back to Games</button>
+            </div>
+            <div class="header-center">
+                <h1>🎯 Dodge Master</h1>
+            </div>
+            <div class="header-right">
+                <span class="player-name" id="playerName">Player</span>
+            </div>
+        </header>
+
+        <!-- Game Info Panel -->
+        <div class="game-info-panel">
+            <div class="info-item">
+                <span class="info-label">Score:</span>
+                <span class="info-value" id="score">0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Lives:</span>
+                <span class="info-value" id="lives">❤️❤️❤️</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Level:</span>
+                <span class="info-value" id="level">1</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">High Score:</span>
+                <span class="info-value" id="highScore">0</span>
+            </div>
+        </div>
+
+        <!-- Game Canvas Area -->
+        <div class="game-container">
+            <div id="gameCanvas" class="game-canvas">
+                <!-- Player -->
+                <div id="player" class="player">🚀</div>
+                
+                <!-- Falling objects will be added here dynamically -->
+            </div>
+
+            <!-- Start Screen Overlay -->
+            <div id="startScreen" class="game-overlay">
+                <div class="overlay-content">
+                    <h2>🎮 Dodge Master</h2>
+                    <p class="game-instructions">
+                        Use <strong>← →</strong> Arrow Keys to move<br>
+                        Dodge the falling objects!<br>
+                        Survive as long as you can!
+                    </p>
+                    <button id="startBtn" class="btn btn-primary btn-large">Start Game</button>
+                    <div class="difficulty-selector">
+                        <label>Choose Difficulty:</label>
+                        <div class="difficulty-buttons">
+                            <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                            <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                            <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pause Screen Overlay -->
+            <div id="pauseScreen" class="game-overlay hidden">
+                <div class="overlay-content">
+                    <h2>⏸️ Paused</h2>
+                    <p>Take a breath!</p>
+                    <button id="resumeBtn" class="btn btn-primary btn-large">Resume</button>
+                    <button id="restartBtn" class="btn btn-secondary">Restart</button>
+                    <button id="quitBtn" class="btn btn-danger">Quit to Menu</button>
+                </div>
+            </div>
+
+            <!-- Game Over Screen Overlay -->
+            <div id="gameOverScreen" class="game-overlay hidden">
+                <div class="overlay-content">
+                    <h2>💥 Game Over!</h2>
+                    <p class="final-score">Your Score: <span id="finalScore">0</span></p>
+                    <p class="high-score-msg" id="highScoreMsg"></p>
+                    <button id="playAgainBtn" class="btn btn-primary btn-large">Play Again</button>
+                    <button id="backToMenuBtn" class="btn btn-secondary">Back to Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Controls -->
+        <div class="game-controls">
+            <button id="pauseBtn" class="btn btn-warning" disabled>⏸️ Pause</button>
+            <div class="control-hints">
+                <span>⌨️ Controls: Arrow Keys (← →) </span>
+                <span>⏸️ Pause: P or ESC</span>
+            </div>
+        </div>
+
+        <!-- Game Stats -->
+        <div class="game-stats-panel">
+            <h3>📊 Your Stats</h3>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Games Played:</span>
+                    <span class="stat-value" id="gamesPlayed">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Total Score:</span>
+                    <span class="stat-value" id="totalScore">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Best Streak:</span>
+                    <span class="stat-value" id="bestStreak">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/utils/auth.js"></script>
+    <script src="../js/games/game1.js"></script>
+</body>
+</html>

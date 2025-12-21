@@ -1,0 +1,246 @@
+/**
+ * gamesMenu.js
+ * Handles the games menu page functionality
+ * - Display user stats
+ * - Show game cards with personal stats
+ * - Handle game navigation
+ * - Display leaderboard
+ */
+
+// Check if user is logged in on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initGamesPage();
+});
+
+/**
+ * Initialize the games page
+ */
+function initGamesPage() {
+    // Check session validity
+    if (!checkSession()) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    const currentUser = getCurrentUser();
+    
+    // Create navbar
+    createNavbar('games');
+    
+    // Load and display user stats
+    loadUserStats(currentUser.id);
+    
+    // Load game-specific stats
+    loadGameStats(currentUser.id);
+    
+    // Load leaderboard (default: game1)
+    loadLeaderboard('game1');
+    
+    // Set up event listeners
+    setupEventListeners();
+}
+
+/**
+ * Display username in navbar
+ */
+function displayUsername(user) {
+    const usernameEl = document.getElementById('username');
+    if (usernameEl && user) {
+        usernameEl.textContent = user.username;
+    }
+}
+
+/**
+ * Load and display user overall stats
+ */
+function loadUserStats(userId) {
+    const stats = getUserStats(userId);
+    
+    // Update stat cards
+    document.getElementById('totalGamesPlayed').textContent = stats.totalGamesPlayed || 0;
+    document.getElementById('totalWins').textContent = stats.totalWins || 0;
+    document.getElementById('highestScore').textContent = stats.highestScore || 0;
+    document.getElementById('achievementCount').textContent = stats.achievementCount || 0;
+}
+
+/**
+ * Get user overall stats from all games
+ */
+function getUserStats(userId) {
+    const gameStats = getGameStats(userId);
+    
+    if (!gameStats) {
+        return {
+            totalGamesPlayed: 0,
+            totalWins: 0,
+            highestScore: 0,
+            achievementCount: 0
+        };
+    }
+    
+    let totalGamesPlayed = 0;
+    let totalWins = 0;
+    let highestScore = 0;
+    let achievementCount = 0;
+    
+    // Aggregate stats from all games
+    for (const gameId in gameStats) {
+        const game = gameStats[gameId];
+        totalGamesPlayed += game.played || 0;
+        totalWins += game.won || 0;
+        highestScore = Math.max(highestScore, game.highScore || 0);
+        achievementCount += (game.achievements && game.achievements.length) || 0;
+    }
+    
+    return {
+        totalGamesPlayed,
+        totalWins,
+        highestScore,
+        achievementCount
+    };
+}
+
+/**
+ * Load game-specific stats for game cards
+ */
+function loadGameStats(userId) {
+    const gameStats = getGameStats(userId);
+    
+    if (!gameStats) return;
+    
+    // Update Game 1 stats
+    if (gameStats.game1) {
+        document.getElementById('game1Played').textContent = gameStats.game1.played || 0;
+        document.getElementById('game1Best').textContent = gameStats.game1.highScore || 0;
+    }
+    
+    // Update Game 2 stats
+    if (gameStats.game2) {
+        document.getElementById('game2Played').textContent = gameStats.game2.played || 0;
+        document.getElementById('game2Best').textContent = gameStats.game2.highScore || 0;
+    }
+}
+
+/**
+ * Load and display leaderboard for a specific game
+ */
+function loadLeaderboard(gameId) {
+    const leaderboard = getLeaderboard(gameId);
+    const tbody = document.getElementById('leaderboardBody');
+    
+    if (!tbody) return;
+    
+    // Clear existing rows
+    tbody.innerHTML = '';
+    
+    if (!leaderboard || leaderboard.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="no-data">No scores yet. Be the first to play!</td></tr>';
+        return;
+    }
+    
+    // Sort by score descending and take top 5
+    const topScores = leaderboard
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5);
+    
+    // Create rows
+    topScores.forEach((entry, index) => {
+        const row = document.createElement('tr');
+        
+        // Add highlight for current user
+        const currentUser = getCurrentUser();
+        if (currentUser && entry.userId === currentUser.id) {
+            row.classList.add('current-user');
+        }
+        
+        // Rank with medal for top 3
+        let rankDisplay = index + 1;
+        if (index === 0) rankDisplay = '🥇';
+        else if (index === 1) rankDisplay = '🥈';
+        else if (index === 2) rankDisplay = '🥉';
+        
+        // Format date
+        const date = new Date(entry.date);
+        const dateStr = date.toLocaleDateString();
+        
+        row.innerHTML = `
+            <td>${rankDisplay}</td>
+            <td>${entry.username}</td>
+            <td>${entry.score}</td>
+            <td>${dateStr}</td>
+        `;
+        
+        tbody.appendChild(row);
+    });
+}
+
+/**
+ * Set up all event listeners
+ */
+function setupEventListeners() {
+    // Play buttons
+    const playButtons = document.querySelectorAll('.play-btn');
+    playButtons.forEach(btn => {
+        btn.addEventListener('click', handlePlayGame);
+    });
+    
+    // Leaderboard tabs
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', handleTabSwitch);
+    });
+}
+
+/**
+ * Handle play game button click
+ */
+function handlePlayGame(e) {
+    const gameId = e.target.dataset.game;
+    
+    if (!gameId) return;
+    
+    // Navigate to game page
+    window.location.href = `${gameId}.html`;
+}
+
+/**
+ * Handle leaderboard tab switch
+ */
+function handleTabSwitch(e) {
+    const gameId = e.target.dataset.game;
+    
+    if (!gameId) return;
+    
+    // Update active tab
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    e.target.classList.add('active');
+    
+    // Load leaderboard for selected game
+    loadLeaderboard(gameId);
+}
+
+/**
+ * Helper function to get game stats from localStorage
+ * This will be implemented in storage.js
+ */
+function getGameStats(userId) {
+    const stats = localStorage.getItem('gameStats');
+    if (!stats) return null;
+    
+    const allStats = JSON.parse(stats);
+    return allStats[userId] || null;
+}
+
+/**
+ * Helper function to get leaderboard from localStorage
+ * This will be implemented in storage.js
+ */
+function getLeaderboard(gameId) {
+    const leaderboard = localStorage.getItem('leaderboard');
+    if (!leaderboard) return [];
+    
+    const allLeaderboards = JSON.parse(leaderboard);
+    return allLeaderboards[gameId] || [];
+}
