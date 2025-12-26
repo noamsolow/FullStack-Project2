@@ -4,7 +4,6 @@
  * - Display user stats
  * - Show game cards with personal stats
  * - Handle game navigation
- * - Display leaderboard
  */
 
 // Check if user is logged in on page load
@@ -32,9 +31,6 @@ function initGamesPage() {
     
     // Load game-specific stats
     loadGameStats(currentUser.id);
-    
-    // Load leaderboard (default: game1)
-    loadLeaderboard('game1');
     
     // Set up event listeners
     setupEventListeners();
@@ -183,12 +179,6 @@ function setupEventListeners() {
     playButtons.forEach(btn => {
         btn.addEventListener('click', handlePlayGame);
     });
-    
-    // Leaderboard tabs
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', handleTabSwitch);
-    });
 }
 
 /**
@@ -201,24 +191,6 @@ function handlePlayGame(e) {
     
     // Navigate to game page
     window.location.href = `${gameId}.html`;
-}
-
-/**
- * Handle leaderboard tab switch
- */
-function handleTabSwitch(e) {
-    const gameId = e.target.dataset.game;
-    
-    if (!gameId) return;
-    
-    // Update active tab
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    e.target.classList.add('active');
-    
-    // Load leaderboard for selected game
-    loadLeaderboard(gameId);
 }
 
 /**

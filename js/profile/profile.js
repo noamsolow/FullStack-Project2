@@ -193,8 +193,9 @@ function shouldUnlockAchievement(achievementTitle, allGameStats) {
     switch (achievementTitle) {
         case 'First Victory':
             return stats.totalWins >= 1;
-        case 'Speed Demon':
-            return allGameStats.game1 && allGameStats.game1.bestStreak >= 5;
+        case 'Code Master':
+            // Complete all 5 levels in Code Runner (any difficulty)
+            return allGameStats.game1 && (allGameStats.game1.levelsBeat >= 5 || allGameStats.game1.bestStreak >= 5);
         case 'Champion':
             return stats.highestScore >= 1000;
         case 'Dedicated Player':
@@ -240,7 +241,7 @@ function loadRecentActivity() {
         const gameStats = allGameStats[gameId];
         if (gameStats.lastPlayed) {
             activities.push({
-                game: gameId === 'game1' ? 'Dodge Master' : 'Brain Teaser',
+                game: gameId === 'game1' ? 'Code Runner' : 'Brain Teaser',
                 date: new Date(gameStats.lastPlayed),
                 score: gameStats.highScore
             });

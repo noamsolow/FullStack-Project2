@@ -29,6 +29,10 @@ function createNavbar(activePage = '') {
                         <span class="nav-icon">🎯</span>
                         <span class="nav-text">Games</span>
                     </a>
+                    <a href="leaderboard.html" class="nav-link ${activePage === 'leaderboard' ? 'active' : ''}">
+                        <span class="nav-icon">🏆</span>
+                        <span class="nav-text">Leaderboard</span>
+                    </a>
                     <a href="profile.html" class="nav-link ${activePage === 'profile' ? 'active' : ''}">
                         <span class="nav-icon">👤</span>
                         <span class="nav-text">Profile</span>
@@ -40,7 +44,6 @@ function createNavbar(activePage = '') {
                         <span class="user-name">${currentUser.username}</span>
                     </div>
                     <button id="navLogoutBtn" class="btn btn-logout">
-                        <span class="logout-icon">🚪</span>
                         <span class="logout-text">Logout</span>
                     </button>
                 </div>
