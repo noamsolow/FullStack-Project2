@@ -9,21 +9,22 @@
  */
 function checkSession() {
     const currentUser = localStorage.getItem('currentUser');
-    
+
     // If no user logged in, create test user for development
     if (!currentUser) {
-        // Create a test user for development/testing
-        const testUser = {
-            id: 'test_user_123',
-            username: 'TestPlayer',
-            email: 'test@example.com',
-            sessionToken: 'test_token_' + Date.now(),
-            loginTime: new Date().toISOString(),
-            expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString() // 2 hours
-        };
-        localStorage.setItem('currentUser', JSON.stringify(testUser));
-        console.log('✅ Test user created for development');
-        return true;
+        return false;
+        // // Create a test user for development/testing
+        // const testUser = {
+        //     id: 'test_user_123',
+        //     username: 'TestPlayer',
+        //     email: 'test@example.com',
+        //     sessionToken: 'test_token_' + Date.now(),
+        //     loginTime: new Date().toISOString(),
+        //     expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString() // 2 hours
+        // };
+        // localStorage.setItem('currentUser', JSON.stringify(testUser));
+        // console.log('✅ Test user created for development');
+        // return true;
     }
     
     // Check if session is expired

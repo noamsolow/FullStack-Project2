@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התחברות - Game Hub</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Logo Section -->
+        <div class="auth-header">
+            <div class="logo">
+                <span class="logo-icon">🎮</span>
+                <h1>Game Hub</h1>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="auth-card" id="loginCard">
+            <div class="card-header">
+                <h2>Welcome Back! 👋</h2>
+                <p>Login to your account to continue</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginUsername">
+                        <span class="label-icon">👤</span>
+                        Username
+                    </label>
+                    <input 
+                        type="text" 
+                        id="loginUsername" 
+                        class="form-input" 
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                    >
+                    <span class="input-error" id="loginUsernameError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">
+                        <span class="label-icon">🔒</span>
+                        Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input 
+                            type="password" 
+                            id="loginPassword" 
+                            class="form-input" 
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="toggle-password" id="toggleLoginPassword">
+                            👁️
+                        </button>
+                    </div>
+                    <span class="input-error" id="loginPasswordError"></span>
+                </div>
+
+                <div class="form-footer">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span class="btn-text">Login</span>
+                    <span class="btn-icon">→</span>
+                </button>
+
+                <div class="form-divider">
+                    <span>או</span>
+                </div>
+
+                <button type="button" class="btn-switch" id="showRegister">
+                    Don't have an account? <strong>Sign up now</strong>
+                </button>
+            </form>
+
+            <!-- Login Attempts Warning -->
+            <div class="alert alert-warning hidden" id="loginWarning">
+                <span class="alert-icon">⚠️</span>
+                <span class="alert-text"></span>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div class="auth-card hidden" id="registerCard">
+            <div class="card-header">
+                <h2>Join us! 🎉</h2>
+                <p>Create a new account and start playing</p>
+            </div>
+            
+            <form id="registerForm" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="registerFirstName">
+                            <span class="label-icon">📝</span>
+                            First Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="registerFirstName" 
+                            class="form-input" 
+                            placeholder="First name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerLastName">
+                            <span class="label-icon">📝</span>
+                            Last Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="registerLastName" 
+                            class="form-input" 
+                            placeholder="Last name"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerUsername">
+                        <span class="label-icon">👤</span>
+                        Username
+                    </label>
+                    <input 
+                        type="text" 
+                        id="registerUsername" 
+                        class="form-input" 
+                        placeholder="Choose a unique username"
+                        required
+                        autocomplete="username"
+                    >
+                    <span class="input-hint">At least 3 characters, letters and numbers only</span>
+                    <span class="input-error" id="registerUsernameError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">
+                        <span class="label-icon">📧</span>
+                        Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="registerEmail" 
+                        class="form-input" 
+                        placeholder="your@email.com"
+                        required
+                        autocomplete="email"
+                    >
+                    <span class="input-error" id="registerEmailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword">
+                        <span class="label-icon">🔒</span>
+                        Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input 
+                            type="password" 
+                            id="registerPassword" 
+                            class="form-input" 
+                            placeholder="Choose a strong password"
+                            required
+                            autocomplete="new-password"
+                        >
+                        <button type="button" class="toggle-password" id="toggleRegisterPassword">
+                            👁️
+                        </button>
+                    </div>
+                    <span class="input-hint">At least 6 characters</span>
+                    <span class="input-error" id="registerPasswordError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerConfirmPassword">
+                        <span class="label-icon">🔒</span>
+                        Confirm Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input 
+                            type="password" 
+                            id="registerConfirmPassword" 
+                            class="form-input" 
+                            placeholder="Enter password again"
+                            required
+                            autocomplete="new-password"
+                        >
+                        <button type="button" class="toggle-password" id="toggleConfirmPassword">
+                            👁️
+                        </button>
+                    </div>
+                    <span class="input-error" id="registerConfirmPasswordError"></span>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-icon">→</span>
+                </button>
+
+                <div class="form-divider">
+                    <span>או</span>
+                </div>
+
+                <button type="button" class="btn-switch" id="showLogin">
+                    Already have an account? <strong>Login</strong>
+                </button>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div class="alert alert-success hidden" id="successAlert">
+            <span class="alert-icon">✅</span>
+            <span class="alert-text"></span>
+        </div>
+
+        <!-- Footer -->
+        <div class="auth-footer">
+            <p>&copy; 2024 Game Hub | Created by Noam Solow & Yovel Yehoshua</p>
+        </div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="shape shape-1">🎮</div>
+        <div class="shape shape-2">🎯</div>
+        <div class="shape shape-3">🏆</div>
+        <div class="shape shape-4">⭐</div>
+        <div class="shape shape-5">🎲</div>
+        <div class="shape shape-6">🎪</div>
+    </div>
+
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/utils/auth.js"></script>
+    <script src="../js/auth/login.js"></script>
+</body>
+</html>
