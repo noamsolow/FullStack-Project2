@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Challenge - Game Hub</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/game2.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <header class="game-header">
+            <div class="header-left">
+                <button id="backBtn" class="btn btn-secondary" onclick="location.href='games.html'">← Back to Games</button>
+            </div>
+            <div class="header-center">
+                <h1>🪑 Hangman Challenge</h1>
+            </div>
+            <div class="header-right">
+                <span class="player-name" id="playerName">Player</span>
+            </div>
+        </header>
+
+        <div class="game-info-panel">
+            <div class="info-item">
+                <span class="info-label">Mistakes Left:</span>
+                <span class="info-value" id="mistakesLeft">6</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Current Score:</span>
+                <span class="info-value" id="score">0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">High Score:</span>
+                <span class="info-value" id="highScore">0</span>
+            </div>
+        </div>
+
+        <div class="game-main">
+            <div class="hangman-container">
+                <svg id="hangman-svg" viewBox="0 0 200 250">
+                    <line x1="20" y1="230" x2="180" y2="230" class="draw-line" />
+                    <line x1="40" y1="230" x2="40" y2="20" class="draw-line" />
+                    <line x1="40" y1="20" x2="130" y2="20" class="draw-line" />
+                    <line x1="130" y1="20" x2="130" y2="50" class="draw-line" />
+                    <circle cx="130" cy="75" r="25" class="body-part hidden" id="head" />
+                    <line x1="130" y1="100" x2="130" y2="170" class="body-part hidden" id="body" />
+                    <line x1="130" y1="120" x2="90" y2="150" class="body-part hidden" id="left-arm" />
+                    <line x1="130" y1="120" x2="170" y2="150" class="body-part hidden" id="right-arm" />
+                    <line x1="130" y1="170" x2="100" y2="210" class="body-part hidden" id="left-leg" />
+                    <line x1="130" y1="170" x2="160" y2="210" class="body-part hidden" id="right-leg" />
+                </svg>
+            </div>
+
+            <div class="controls-container">
+                <div id="wordDisplay" class="word-display">_ _ _ _ _</div>
+                <div id="keyboard" class="keyboard"></div>
+                <div class="editor-buttons">
+                    <button id="hintBtn" class="btn btn-hint">💡 Hint</button>
+                    <button id="resetBtn" class="btn btn-primary btn-large">🔄 New Game</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="gameOverlay" class="game-overlay hidden">
+            <div class="overlay-content">
+                <h2 id="overlayTitle">Game Over</h2>
+                <p id="overlayMessage"></p>
+                <button id="playAgainBtn" class="btn btn-primary btn-large">Play Again</button>
+            </div>
+        </div>
+
+
+        <div class="stats-panel">
+        <h3>📊 Your Stats</h3>
+        <div class="stat-item">
+            <span>Games Played:</span>
+            <span id="gamesPlayed">0</span>
+        </div>
+        <div class="stat-item">
+            <span>Total Wins:</span>
+            <span id="totalWins">0</span>
+        </div>
+        <div class="stat-item">
+            <span>Best Score:</span>
+            <span id="totalStatsScore">0</span>
+        </div>
+    </div>
+    </div>
+
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/utils/auth.js"></script>
+    <script src="../js/games/game2.js"></script>
+</body>
+</html>
