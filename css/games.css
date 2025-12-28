@@ -116,7 +116,10 @@
 .game-card.disabled {
     opacity: 0.6;
 }
-
+.game-card.disabled:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
 .game-card-header {
     position: relative;
     height: 200px;

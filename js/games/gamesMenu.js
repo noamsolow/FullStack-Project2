@@ -77,7 +77,6 @@ function getUserStats(userId) {
     let totalGamesPlayed = 0;
     let totalWins = 0;
     let highestScore = 0;
-    let achievementCount = 0;
     
     // Aggregate stats from all games
     for (const gameId in gameStats) {
@@ -85,8 +84,10 @@ function getUserStats(userId) {
         totalGamesPlayed += game.played || 0;
         totalWins += game.won || 0;
         highestScore = Math.max(highestScore, game.highScore || 0);
-        achievementCount += (game.achievements && game.achievements.length) || 0;
     }
+    
+    // Count unlocked achievements based on actual criteria
+    const achievementCount = countAchievements(gameStats, totalGamesPlayed, totalWins, highestScore);
     
     return {
         totalGamesPlayed,
@@ -94,6 +95,44 @@ function getUserStats(userId) {
         highestScore,
         achievementCount
     };
+}
+
+/**
+ * Count unlocked achievements based on game stats
+ */
+function countAchievements(gameStats, totalGamesPlayed, totalWins, highestScore) {
+    let count = 0;
+    
+    // First Victory - Win your first game
+    if (totalWins >= 1) count++;
+    
+    // Code Master - Complete all levels in Code Runner
+    if (gameStats.game1 && (gameStats.game1.levelsBeat >= 5 || gameStats.game1.bestStreak >= 5)) count++;
+    
+    // Champion - Score over 1000 points
+    if (highestScore >= 1000) count++;
+    
+    // Dedicated Player - Play 10 games
+    if (totalGamesPlayed >= 10) count++;
+    
+    // Perfectionist - Complete a game without losing a life (tracked separately)
+    // Check if any game has a perfect game flag
+    for (const gameId in gameStats) {
+        if (gameStats[gameId].perfectGame) {
+            count++;
+            break;
+        }
+    }
+    
+    // On Fire - Win 5 games in a row (tracked separately)
+    for (const gameId in gameStats) {
+        if (gameStats[gameId].winStreak >= 5) {
+            count++;
+            break;
+        }
+    }
+    
+    return count;
 }
 
 /**

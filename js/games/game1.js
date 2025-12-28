@@ -1008,12 +1008,14 @@ function saveGameStats() {
         existingStats.highScore = gameState.score;
     }
     
-    // Update levels beat (also stored as bestStreak for profile compatibility)
-    const levelsCompleted = gameState.levelsCompletedThisSession;
-    if (levelsCompleted > existingStats.levelsBeat) {
-        existingStats.levelsBeat = levelsCompleted;
+    // Update levels beat - increment by 1 for each level completion
+    // Since saveGameStats is called once per level complete, just add 1
+    if (!existingStats.totalLevelsCompleted) {
+        existingStats.totalLevelsCompleted = 0;
     }
-    existingStats.bestStreak = existingStats.levelsBeat; // Sync for profile page
+    existingStats.totalLevelsCompleted += 1; // Add 1 for this level completion
+    existingStats.levelsBeat = existingStats.totalLevelsCompleted;
+    existingStats.bestStreak = existingStats.totalLevelsCompleted; // Sync for profile page
     
     // Save to localStorage
     allStats[userId]['game1'] = existingStats;

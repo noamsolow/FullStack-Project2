@@ -82,7 +82,6 @@ function loadOverallStats() {
     let totalGamesPlayed = 0;
     let totalWins = 0;
     let totalScore = 0;
-    let totalAchievements = 0;
 
     // Aggregate stats from all games
     for (const gameId in allGameStats) {
@@ -90,14 +89,38 @@ function loadOverallStats() {
         totalGamesPlayed += gameStats.played || 0;
         totalWins += gameStats.won || 0;
         totalScore += gameStats.totalScore || 0;
-        totalAchievements += (gameStats.achievements && gameStats.achievements.length) || 0;
     }
+
+    // Count unlocked achievements based on actual criteria
+    const totalAchievements = countUnlockedAchievements(allGameStats);
 
     // Update UI
     document.getElementById('totalGamesPlayed').textContent = totalGamesPlayed;
     document.getElementById('totalWins').textContent = totalWins;
     document.getElementById('totalScore').textContent = totalScore.toLocaleString();
     document.getElementById('achievementCount').textContent = totalAchievements;
+}
+
+/**
+ * Count unlocked achievements based on actual criteria
+ */
+function countUnlockedAchievements(allGameStats) {
+    const achievementTitles = [
+        'First Victory',
+        'Code Master',
+        'Champion',
+        'Dedicated Player',
+        'Perfectionist',
+        'On Fire'
+    ];
+    
+    let count = 0;
+    for (const title of achievementTitles) {
+        if (shouldUnlockAchievement(title, allGameStats)) {
+            count++;
+        }
+    }
+    return count;
 }
 
 /**
