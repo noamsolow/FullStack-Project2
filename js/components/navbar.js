@@ -68,8 +68,19 @@ function createNavbar(activePage = '') {
  */
 function handleNavbarLogout() {
     if (confirm('Are you sure you want to logout?')) {
+        // Get current user before logging out
+        const currentUser = getCurrentUser();
+        
+        // Save current page to localStorage with username as key
+        const currentPage = window.location.pathname.split('/').pop() || 'games.html';
+        if (currentUser && currentUser.username) {
+            const storageKey = `lastVisitedPage_${currentUser.username}`;
+            localStorage.setItem(storageKey, currentPage);
+            console.log('💾 Saved last visited page for', currentUser.username + ':', currentPage);
+        }
+        
         logout();
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     }
 }
 

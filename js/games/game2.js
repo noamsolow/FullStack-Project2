@@ -3,10 +3,103 @@
  * Fixes: Stats panel update & Play Again functionality
  */
 
-const WORDS = ["JAVASCRIPT", "HTML", "CSS", "DATABASE", "PYTHON", "REACT", "NODEJS", "BROWSER", "SERVER", "CODING"];
+// Words with categories for better gameplay
+const WORDS = [
+    // Programming Languages
+    { word: "JAVASCRIPT", category: "Programming Language" },
+    { word: "PYTHON", category: "Programming Language" },
+    { word: "JAVA", category: "Programming Language" },
+    { word: "JAVASCRIPT", category: "Programming Language" },
+    { word: "CPLUSPLUS", category: "Programming Language" },
+    { word: "CSHARP", category: "Programming Language" },
+    
+    // Web Technologies
+    { word: "HTML", category: "Web Technology" },
+    { word: "CSS", category: "Web Technology" },
+    { word: "REACT", category: "Web Technology" },
+    { word: "NODEJS", category: "Web Technology" },
+    { word: "BOOTSTRAP", category: "Web Technology" },
+    { word: "WEBPACK", category: "Web Technology" },
+    
+    // Computer Terms
+    { word: "DATABASE", category: "Computer Term" },
+    { word: "BROWSER", category: "Computer Term" },
+    { word: "SERVER", category: "Computer Term" },
+    { word: "CODING", category: "Computer Term" },
+    { word: "ALGORITHM", category: "Computer Term" },
+    { word: "FUNCTION", category: "Computer Term" },
+    { word: "VARIABLE", category: "Computer Term" },
+    { word: "KEYBOARD", category: "Computer Term" },
+    { word: "MONITOR", category: "Computer Term" },
+    { word: "SOFTWARE", category: "Computer Term" },
+    { word: "HARDWARE", category: "Computer Term" },
+    { word: "INTERNET", category: "Computer Term" },
+    { word: "NETWORK", category: "Computer Term" },
+    { word: "FIREWALL", category: "Computer Term" },
+    { word: "ENCRYPTION", category: "Computer Term" },
+    
+    // Animals
+    { word: "MONKEY", category: "Animal" },
+    { word: "ELEPHANT", category: "Animal" },
+    { word: "GIRAFFE", category: "Animal" },
+    { word: "DOLPHIN", category: "Animal" },
+    { word: "PENGUIN", category: "Animal" },
+    { word: "TIGER", category: "Animal" },
+    { word: "KANGAROO", category: "Animal" },
+    { word: "OCTOPUS", category: "Animal" },
+    { word: "BUTTERFLY", category: "Animal" },
+    { word: "CROCODILE", category: "Animal" },
+    
+    // Countries
+    { word: "AUSTRALIA", category: "Country" },
+    { word: "BRAZIL", category: "Country" },
+    { word: "CANADA", category: "Country" },
+    { word: "GERMANY", category: "Country" },
+    { word: "JAPAN", category: "Country" },
+    { word: "MEXICO", category: "Country" },
+    { word: "FRANCE", category: "Country" },
+    { word: "ITALY", category: "Country" },
+    { word: "ISRAEL", category: "Country" },
+    
+    // Food
+    { word: "PIZZA", category: "Food" },
+    { word: "HAMBURGER", category: "Food" },
+    { word: "SPAGHETTI", category: "Food" },
+    { word: "CHOCOLATE", category: "Food" },
+    { word: "SANDWICH", category: "Food" },
+    { word: "PANCAKE", category: "Food" },
+    { word: "STRAWBERRY", category: "Food" },
+    { word: "WATERMELON", category: "Food" },
+    
+    // Sports
+    { word: "BASKETBALL", category: "Sport" },
+    { word: "FOOTBALL", category: "Sport" },
+    { word: "SWIMMING", category: "Sport" },
+    { word: "TENNIS", category: "Sport" },
+    { word: "VOLLEYBALL", category: "Sport" },
+    { word: "BASEBALL", category: "Sport" },
+    
+    // Movies & Entertainment
+    { word: "SUPERMAN", category: "Superhero" },
+    { word: "BATMAN", category: "Superhero" },
+    { word: "SPIDERMAN", category: "Superhero" },
+    { word: "IRONMAN", category: "Superhero" },
+    { word: "NETFLIX", category: "Entertainment" },
+    { word: "YOUTUBE", category: "Entertainment" },
+    
+    // Science
+    { word: "GRAVITY", category: "Science" },
+    { word: "MOLECULE", category: "Science" },
+    { word: "ELECTRON", category: "Science" },
+    { word: "GALAXY", category: "Science" },
+    { word: "OXYGEN", category: "Science" },
+    { word: "HYDROGEN", category: "Science" }
+];
+
 const MAX_MISTAKES = 6;
 
 let selectedWord = "";
+let selectedCategory = "";
 let guessedLetters = [];
 let mistakes = 0;
 let currentGameScore = 0; 
@@ -17,7 +110,7 @@ let sessionStarted = false; // Track if this session counted toward "played"
 document.addEventListener('DOMContentLoaded', () => {
     // Check session first
     if (!checkSession()) {
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
         return;
     }
 
@@ -62,7 +155,11 @@ function playAgain() {
  * Initialize new word
  */
 function initGame() {
-    selectedWord = WORDS[Math.floor(Math.random() * WORDS.length)];
+    // Select random word object
+    const wordObj = WORDS[Math.floor(Math.random() * WORDS.length)];
+    selectedWord = wordObj.word;
+    selectedCategory = wordObj.category;
+    
     guessedLetters = [];
     mistakes = 0;
     hintUsed = false;
@@ -72,6 +169,10 @@ function initGame() {
 
     // Reset visual elements
     document.querySelectorAll('.body-part').forEach(part => part.classList.add('hidden'));
+    
+    // Update category display
+    const categoryText = document.getElementById('categoryText');
+    if (categoryText) categoryText.textContent = selectedCategory;
     
     updateWordDisplay();
     createKeyboard();

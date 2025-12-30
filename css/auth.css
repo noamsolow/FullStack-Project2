@@ -15,12 +15,28 @@ body.auth-page {
     background: linear-gradient(135deg, #171f3f 0%, #6c1f2e 100%);
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+/* Footer styling for auth pages */
+body.auth-page .footer.auth-footer-component {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    background: transparent;
+}
+
+body.auth-page .footer.auth-footer-component .container {
+    max-width: 100%;
 }
 
 /* Auth Container */

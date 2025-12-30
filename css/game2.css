@@ -88,13 +88,33 @@ body {
     gap: 30px;
 }
 
+/* Category Display */
+.category-display {
+    font-size: 18px;
+    color: #7f8c8d;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: 2px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.category-display #categoryText {
+    font-weight: bold;
+    color: #b21f1f;
+    text-transform: uppercase;
+}
+
 .word-display {
-    font-size: 50px;
+    font-size: clamp(24px, 4vw, 50px);
     font-family: 'Courier New', monospace;
     font-weight: bold;
-    letter-spacing: 15px;
+    letter-spacing: clamp(8px, 1.5vw, 15px);
     color: #2c3e50;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .keyboard {

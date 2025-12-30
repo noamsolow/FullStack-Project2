@@ -37,8 +37,8 @@ const levels = {
             bananas: [{ x: 4, y: 2 }],
             walls: [],
             water: [],
-            optimalMoves: 4,
-            hint: "Use move() four times to reach the banana!"
+            optimalMoves: 5,
+            hint: "Use move() four times to reach the banana, then grab() to collect it!"
         },
         {
             name: "Turn Right",
@@ -67,8 +67,8 @@ const levels = {
             bananas: [{ x: 2, y: 2 }, { x: 4, y: 2 }],
             walls: [],
             water: [],
-            optimalMoves: 6,
-            hint: "Collect the first banana, then continue to the second!"
+            optimalMoves: 8,
+            hint: "Move to the first banana, grab() it, then continue to the second!"
         },
         {
             name: "Square Path",
@@ -77,8 +77,8 @@ const levels = {
             bananas: [{ x: 4, y: 0 }, { x: 4, y: 4 }, { x: 0, y: 4 }],
             walls: [],
             water: [],
-            optimalMoves: 15,
-            hint: "Walk around the edge of the grid!"
+            optimalMoves: 18,
+            hint: "Walk around the edge of the grid and grab() each banana!"
         }
     ],
     medium: [
@@ -119,8 +119,8 @@ const levels = {
             bananas: [{ x: 2, y: 0 }, { x: 4, y: 2 }, { x: 2, y: 4 }],
             walls: [{ x: 3, y: 1 }, { x: 1, y: 3 }],
             water: [],
-            optimalMoves: 16,
-            hint: "Plan your route to collect all bananas efficiently"
+            optimalMoves: 19,
+            hint: "Plan your route and use grab() at each banana location!"
         },
         {
             name: "Repeat Challenge",
@@ -156,8 +156,8 @@ const levels = {
             bananas: [{ x: 6, y: 3 }],
             walls: [],
             water: [
-                { x: 2, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 },
-                { x: 4, y: 2 }, { x: 4, y: 3 }, { x: 4, y: 4 }
+                { x: 2, y: 0 },{ x: 2, y: 1 },{ x: 2, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 },
+                { x: 4, y: 2 }, { x: 4, y: 3 }, { x: 4, y: 4 },{ x: 4, y: 5 }, { x: 4, y: 6 }
             ],
             optimalMoves: 14,
             hint: "Find the safe path between the water!"
@@ -175,8 +175,8 @@ const levels = {
                 { x: 4, y: 2 }, { x: 4, y: 4 }
             ],
             water: [],
-            optimalMoves: 28,
-            hint: "Collect all four corner bananas!"
+            optimalMoves: 32,
+            hint: "Visit all four corners and grab() each banana!"
         },
         {
             name: "The Fortress",
@@ -184,9 +184,9 @@ const levels = {
             start: { x: 0, y: 0, direction: 'right' },
             bananas: [{ x: 3, y: 3 }],
             walls: [
-                { x: 2, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 },
-                { x: 4, y: 1 }, { x: 4, y: 2 }, { x: 4, y: 3 }, { x: 4, y: 4 },
-                { x: 3, y: 1 }, { x: 3, y: 4 }
+                 { x: 2, y: 0 },{ x: 2, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 },{ x: 2, y: 5 }, 
+                { x: 4, y: 1 }, { x: 4, y: 2 }, { x: 4, y: 3 }, { x: 4, y: 4 },{ x: 4, y: 5 },
+                { x: 3, y: 5 }
             ],
             water: [],
             optimalMoves: 12,
@@ -208,8 +208,8 @@ const levels = {
             water: [
                 { x: 3, y: 3 }, { x: 4, y: 3 }, { x: 3, y: 5 }
             ],
-            optimalMoves: 35,
-            hint: "Plan your route carefully to collect all bananas!"
+            optimalMoves: 39,
+            hint: "Plan your route carefully and grab() all bananas!"
         }
     ]
 };
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initGame() {
     // Check session
     if (!checkSession()) {
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
         return;
     }
 
@@ -747,24 +747,12 @@ function grabBanana() {
 }
 
 /**
- * Check if monkey stepped on a banana (auto-collect)
+ * Check if monkey stepped on a banana (no auto-collect - must use grab())
  */
 function checkBananaCollection() {
-    const { x, y } = gameState.monkey;
-    const bananaIndex = gameState.bananas.findIndex(b => b.x === x && b.y === y);
-    
-    if (bananaIndex !== -1) {
-        gameState.bananas.splice(bananaIndex, 1);
-        gameState.collectedBananas++;
-        
-        const cell = gameState.grid[y][x];
-        const bananaEl = cell.querySelector('.banana');
-        if (bananaEl) {
-            bananaEl.remove();
-        }
-        
-        logToConsole('🍌 Got a banana!', 'success');
-    }
+    // Bananas are no longer auto-collected
+    // Player must use grab() command to collect them
+    // This function is kept for potential future use (e.g., showing visual feedback)
 }
 
 /**

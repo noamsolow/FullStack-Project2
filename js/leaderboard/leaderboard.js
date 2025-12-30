@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initLeaderboard() {
     // Check session
     if (!checkSession()) {
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
         return;
     }
 

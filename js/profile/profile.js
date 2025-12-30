@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function initProfilePage() {
     // Check session
     if (!checkSession()) {
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
         return;
     }
 
     currentUser = getCurrentUser();
     
     if (!currentUser) {
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
         return;
     }
 
@@ -264,7 +264,7 @@ function loadRecentActivity() {
         const gameStats = allGameStats[gameId];
         if (gameStats.lastPlayed) {
             activities.push({
-                game: gameId === 'game1' ? 'Code Runner' : 'Brain Teaser',
+                game: gameId === 'game1' ? 'Code Runner' : 'Hangman Challenge',
                 date: new Date(gameStats.lastPlayed),
                 score: gameStats.highScore
             });
@@ -332,7 +332,7 @@ function setupEventListeners() {
 function handleLogout() {
     if (confirm('Are you sure you want to logout?')) {
         logout();
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     }
 }
 
@@ -433,7 +433,7 @@ function handleDeleteAccount() {
         logout();
         
         alert('Account deleted successfully.');
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     }
 }
 
