@@ -12,7 +12,6 @@
 /* Auth page specific body styling - only for login/register pages */
 body.auth-page {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #171f3f 0%, #6c1f2e 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;

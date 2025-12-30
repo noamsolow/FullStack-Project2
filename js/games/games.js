@@ -1,5 +1,5 @@
 /**
- * gamesMenu.js
+ * games.js
  * Handles the games menu page functionality
  * - Display user stats
  * - Show game cards with personal stats
