@@ -17,10 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initLeaderboard() {
     // Check session
-    if (!checkSession()) {
-        window.location.href = 'login.html';
-        return;
-    }
+    if (!requireAuth()) return;
 
     currentUser = getCurrentUser();
     

@@ -15,15 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initProfilePage() {
     // Check session
-    if (!checkSession()) {
-        window.location.href = 'login.html';
-        return;
-    }
+    if (!requireAuth()) return;
 
     currentUser = getCurrentUser();
     
     if (!currentUser) {
-        window.location.href = 'login.html';
+        window.location.replace('login.html');
         return;
     }
 
@@ -365,6 +362,26 @@ function handleEditProfile(e) {
     const newEmail = document.getElementById('editEmail').value.trim();
     const newFirstName = document.getElementById('editFirstName').value.trim();
     const newLastName = document.getElementById('editLastName').value.trim();
+
+    // Check if username is taken by another user
+    if (newUsername !== currentUser.username) {
+        const existingUser = getUser(newUsername);
+        if (existingUser && existingUser.id !== currentUser.id) {
+            alert('❌ Username is already taken. Please choose a different one.');
+            return;
+        }
+        // Update leaderboard with new username
+        updateLeaderboardUsername(currentUser.id, newUsername);
+    }
+
+    // Check if email is taken by another user
+    if (newEmail !== currentUser.email) {
+        const existingUser = getUser(newEmail);
+        if (existingUser && existingUser.id !== currentUser.id) {
+            alert('❌ Email is already in use. Please use a different one.');
+            return;
+        }
+    }
 
     // Update user data
     const updatedUser = {

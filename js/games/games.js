@@ -16,10 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initGamesPage() {
     // Check session validity
-    if (!checkSession()) {
-        window.location.href = 'login.html';
-        return;
-    }
+    if (!requireAuth()) return;
 
     const currentUser = getCurrentUser();
     

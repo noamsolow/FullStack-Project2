@@ -101,6 +101,21 @@ function logout() {
 }
 
 /**
+ * Require authentication for a page - hides content until verified
+ * Call at the start of page init functions
+ * @returns {boolean} True if authenticated, false if redirecting
+ */
+function requireAuth() {
+    if (!checkSession()) {
+        window.location.replace('login.html');
+        return false;
+    }
+    // Show the page content after auth verified
+    document.body.classList.add('auth-verified');
+    return true;
+}
+
+/**
  * Check if session is valid (not expired)
  * @returns {boolean} True if valid
  */

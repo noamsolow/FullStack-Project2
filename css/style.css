@@ -17,6 +17,15 @@ body {
     color: #333;
 }
 
+/* Hide body until auth check completes (prevents flash on back navigation) */
+body.auth-required {
+    visibility: hidden;
+}
+
+body.auth-verified {
+    visibility: visible;
+}
+
 /* Navbar Styles */
 .navbar {
     background: linear-gradient(135deg, #491aae 0%, #a60c3a 100%);

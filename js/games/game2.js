@@ -109,10 +109,7 @@ let sessionStarted = false; // Track if this session counted toward "played"
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check session first
-    if (!checkSession()) {
-        window.location.href = 'login.html';
-        return;
-    }
+    if (!requireAuth()) return;
 
     currentUser = getCurrentUser();
     if (currentUser && document.getElementById('playerName')) {

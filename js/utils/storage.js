@@ -227,6 +227,34 @@ function initializeGameStats(userId, gameId) {
 // ============================================
 
 /**
+ * Update username in all leaderboard entries for a user
+ * @param {string} userId - User ID
+ * @param {string} newUsername - New username
+ */
+function updateLeaderboardUsername(userId, newUsername) {
+    try {
+        const allLeaderboards = getAllLeaderboards();
+        let updated = false;
+        
+        for (const gameId in allLeaderboards) {
+            allLeaderboards[gameId].forEach(entry => {
+                if (entry.userId === userId) {
+                    entry.username = newUsername;
+                    updated = true;
+                }
+            });
+        }
+        
+        if (updated) {
+            localStorage.setItem('leaderboard', JSON.stringify(allLeaderboards));
+            console.log('✅ Leaderboard usernames updated for user:', userId);
+        }
+    } catch (error) {
+        console.error('Error updating leaderboard username:', error);
+    }
+}
+
+/**
  * Get all leaderboards
  * @returns {Object} All leaderboards
  */

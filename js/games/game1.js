@@ -228,10 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initGame() {
     // Check session
-    if (!checkSession()) {
-        window.location.href = 'login.html';
-        return;
-    }
+    if (!requireAuth()) return;
 
     gameState.currentUser = getCurrentUser();
     
