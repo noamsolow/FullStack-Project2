@@ -712,6 +712,15 @@ function grabBanana() {
 
 
 
+// Check if monkey stepped on a banana (auto-collect)
+function checkBananaCollection() {
+    const { x, y } = gameState.monkey;
+    const bananaIndex = gameState.bananas.findIndex(b => b.x === x && b.y === y);
+    
+    // Banana exists but we don't auto-collect - player must use grab()
+    // This function is just a placeholder for potential future auto-collect feature
+}
+
 // Check win condition
 function checkWinCondition() {
     const level = levels[gameState.difficulty][gameState.currentLevel];

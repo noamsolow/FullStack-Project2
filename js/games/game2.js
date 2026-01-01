@@ -131,26 +131,20 @@ document.addEventListener('DOMContentLoaded', () => {
     initGame();
 });
 
-/**
- * Full reset (New Game button)
- */
+// Full reset of the game
 function fullReset() {
     currentGameScore = 0;
     sessionStarted = false; // Reset session tracking
     initGame();
 }
 
-/**
- * Play Again (from overlay) - keeps score streak
- */
+// Play again after game over
 function playAgain() {
     document.getElementById('gameOverlay').classList.add('hidden');
     initGame();
 }
 
-/**
- * Initialize new word
- */
+// Initialize game
 function initGame() {
     if (!requireAuth()) return;
     // Select random word object
@@ -177,9 +171,7 @@ function initGame() {
     updateUIStats();
 }
 
-/**
- * Create keyboard
- */
+// Create on-screen keyboard
 function createKeyboard() {
     const keyboardContainer = document.getElementById('keyboard');
     if (!keyboardContainer) return;
@@ -195,9 +187,7 @@ function createKeyboard() {
     });
 }
 
-/**
- * Handle hint button
- */
+// Handle hint usage
 function handleHint() {
     if (hintUsed) return;
     const remainingLetters = selectedWord.split('').filter(l => !guessedLetters.includes(l));
@@ -209,9 +199,7 @@ function handleHint() {
     }
 }
 
-/**
- * Handle letter guess
- */
+// Handle letter guess
 function handleGuess(letter) {
     if (guessedLetters.includes(letter)) return;
     
@@ -230,9 +218,7 @@ function handleGuess(letter) {
     }
 }
 
-/**
- * Update word display
- */
+// Update displayed word
 function updateWordDisplay() {
     const display = selectedWord.split("").map(l => guessedLetters.includes(l) ? l : "_").join(" ");
     const wordDisplayEl = document.getElementById('wordDisplay');
@@ -241,9 +227,7 @@ function updateWordDisplay() {
     }
 }
 
-/**
- * Show next body part
- */
+// Show next part of hangman
 function showNextPart() {
     const parts = ["head", "body", "left-arm", "right-arm", "left-leg", "right-leg"];
     if (mistakes > 0 && mistakes <= parts.length) {
@@ -252,9 +236,7 @@ function showNextPart() {
     }
 }
 
-/**
- * Update UI stats - FIXED VERSION
- */
+// Update UI stats
 function updateUIStats() {
     // Update current game info
     const mistakesElem = document.getElementById('mistakesLeft');
@@ -266,9 +248,7 @@ function updateUIStats() {
     loadUserStats();
 }
 
-/**
- * Load user stats from storage - NEW FUNCTION
- */
+// Load user stats from storage
 function loadUserStats() {
     if (!currentUser) return;
     
@@ -291,9 +271,7 @@ function loadUserStats() {
     }
 }
 
-/**
- * Check win condition
- */
+// Check win condition
 function checkWin() {
     const isWin = selectedWord.split("").every(l => guessedLetters.includes(l));
     if (isWin) {
@@ -304,9 +282,7 @@ function checkWin() {
     }
 }
 
-/**
- * Check loss condition
- */
+// Check loss condition
 function checkLoss() {
     if (mistakes >= MAX_MISTAKES) {
         saveGameResult(false);
@@ -315,9 +291,7 @@ function checkLoss() {
     }
 }
 
-/**
- * Save game result - Uses storage utility functions
- */
+// Save game result and update stats
 function saveGameResult(isWin) {
     if (!currentUser) return;
     
@@ -368,9 +342,7 @@ function saveGameResult(isWin) {
     console.log('✅ Game stats saved:', stats);
 }
 
-/**
- * Show end screen overlay
- */
+// Display end screen
 function showEndScreen(title, message) {
     document.getElementById('overlayTitle').textContent = title;
     document.getElementById('overlayMessage').textContent = message;
