@@ -406,10 +406,16 @@ function handleEditProfile(e) {
 }
 
 /**
- * Handle export data
+ * Handle export data - exports only current user's data
  */
 function handleExportData() {
-    const data = exportData();
+    const data = exportUserData(currentUser.id);
+    
+    if (!data) {
+        alert('❌ Error exporting data. Please try again.');
+        return;
+    }
+    
     const dataStr = JSON.stringify(data, null, 2);
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
     
@@ -418,7 +424,7 @@ function handleExportData() {
     link.download = `game-hub-data-${currentUser.username}-${Date.now()}.json`;
     link.click();
 
-    alert('✅ Data exported successfully!');
+    alert('✅ Your data exported successfully!');
 }
 
 /**
