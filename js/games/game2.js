@@ -316,28 +316,18 @@ function checkLoss() {
 }
 
 /**
- * Save game result - FIXED VERSION
+ * Save game result - Uses storage utility functions
  */
 function saveGameResult(isWin) {
     if (!currentUser) return;
     
-    // Get existing stats
-    let allStats = localStorage.getItem('gameStats');
-    allStats = allStats ? JSON.parse(allStats) : {};
+    // Get existing stats using utility function
+    let stats = getGameStats(currentUser.id, 'game2');
     
-    if (!allStats[currentUser.id]) {
-        allStats[currentUser.id] = {};
+    // Initialize if no stats exist
+    if (!stats) {
+        stats = initializeGameStats(currentUser.id, 'game2');
     }
-    
-    let stats = allStats[currentUser.id]['game2'] || {
-        played: 0,
-        won: 0,
-        highScore: 0,
-        totalScore: 0,
-        bestStreak: 0,
-        lastPlayed: null,
-        achievements: []
-    };
     
     // Only increment played count once per session
     if (!sessionStarted) {
@@ -359,13 +349,12 @@ function saveGameResult(isWin) {
     
     stats.totalScore = Math.max(stats.totalScore || 0, currentGameScore);
     
-    // Save updated stats
-    allStats[currentUser.id]['game2'] = stats;
-    localStorage.setItem('gameStats', JSON.stringify(allStats));
+    // Save updated stats using utility function
+    updateGameStats(currentUser.id, 'game2', stats);
     
-    // Update leaderboard if new high score
+    // Update leaderboard if new high score using utility function
     if (isWin && currentGameScore > 0) {
-        updateLeaderboard('game2', {
+        addOrUpdateLeaderboardEntry('game2', {
             userId: currentUser.id,
             username: currentUser.username,
             score: currentGameScore,
@@ -388,32 +377,3 @@ function showEndScreen(title, message) {
     document.getElementById('gameOverlay').classList.remove('hidden');
 }
 
-/**
- * Helper to update leaderboard
- */
-function updateLeaderboard(gameId, entry) {
-    let leaderboard = localStorage.getItem('leaderboard');
-    leaderboard = leaderboard ? JSON.parse(leaderboard) : {};
-    
-    if (!leaderboard[gameId]) {
-        leaderboard[gameId] = [];
-    }
-    
-    // Check if user already has entry
-    const existingIndex = leaderboard[gameId].findIndex(e => e.userId === entry.userId);
-    
-    if (existingIndex !== -1) {
-        // Update only if new score is higher
-        if (entry.score > leaderboard[gameId][existingIndex].score) {
-            leaderboard[gameId][existingIndex] = entry;
-        }
-    } else {
-        leaderboard[gameId].push(entry);
-    }
-    
-    // Sort and keep top 10
-    leaderboard[gameId].sort((a, b) => b.score - a.score);
-    leaderboard[gameId] = leaderboard[gameId].slice(0, 10);
-    
-    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
-}
