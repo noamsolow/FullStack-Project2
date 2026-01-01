@@ -30,7 +30,7 @@ function checkSession() {
             const currentTime = Date.now();
             
             if (currentTime >= expirationTime) {
-                console.warn('⚠️ Session expired');
+                console.warn(' Session expired');
                 clearSession();
                 return false;
             }

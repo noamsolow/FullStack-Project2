@@ -71,7 +71,7 @@ function handleLogin(e) {
 
     // Validate inputs
     if (!username || !password) {
-        console.log('❌ Validation failed: Empty fields');
+        console.log(' Validation failed: Empty fields');
         if (!username) {
             showError('loginUsernameError', 'Please enter your username');
             document.getElementById('loginUsername').classList.add('error');
@@ -87,7 +87,7 @@ function handleLogin(e) {
 
     // Check login attempts using existing function
     if (!checkLoginAttempts(username)) {
-        console.log('❌ User is blocked');
+        console.log(' User is blocked');
         const user = getUser(username);
         if (user && user.blockedUntil) {
             const blockedUntilTime = new Date(user.blockedUntil).getTime();
@@ -105,18 +105,18 @@ function handleLogin(e) {
     const user = validateLogin(username, password);
 
     if (!user) {
-        console.log('❌ Login validation failed');
+        console.log(' Login validation failed');
         // Check if user exists
         const userData = getUser(username);
         
         if (!userData) {
             // User doesn't exist
-            console.log('❌ User does not exist');
+            console.log(' User does not exist');
             showError('loginPasswordError', 'Username does not exist');
             return;
         }
         
-        console.log('❌ Wrong password, incrementing attempts');
+        console.log(' Wrong password, incrementing attempts');
         // User exists but wrong password - increment attempts
         incrementLoginAttempts(username);
         
@@ -204,7 +204,7 @@ function handleRegister(e) {
         return;
     }
 
-    // Create new user object matching existing structure
+    // Create new user object matching existing structure 
     const newUser = {
         id: 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
         username: username,
