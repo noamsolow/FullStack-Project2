@@ -148,7 +148,7 @@ function handleLogin(e) {
         const storageKey = `lastVisitedPage_${user.username}`;
         const lastPage = localStorage.getItem(storageKey);
         // Redirect to last page or default to games.html
-        const redirectPage = lastPage && lastPage !== 'login.html' && lastPage !== 'register.html' ? lastPage : 'games.html';
+        const redirectPage = lastPage && lastPage !== 'login-signup.html' ? lastPage : 'games.html';
         console.log('🔄 Redirecting', user.username, 'to:', redirectPage);
         window.location.href = redirectPage;
     }, 1500);

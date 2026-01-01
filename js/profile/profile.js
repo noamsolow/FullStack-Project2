@@ -18,7 +18,7 @@ function initProfilePage() {
     currentUser = getCurrentUser();
     
     if (!currentUser) {
-        window.location.replace('login.html');
+        window.location.replace('login-signup.html');
         return;
     }
 
@@ -393,7 +393,7 @@ function handleDeleteAccount() {
         deleteAllUserData(currentUser.id);
         logout();
         alert('Account deleted successfully.');
-        window.location.href = 'login.html';
+        window.location.href = 'login-signup.html';
     }
 }
 

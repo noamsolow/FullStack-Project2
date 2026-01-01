@@ -80,7 +80,7 @@ function logout() {
 // Require authentication to access page
 function requireAuth() {
     if (!checkSession()) {
-        window.location.replace('login.html'); 
+        window.location.replace('login-signup.html'); 
         return false;
     }
     // Show the page content after auth verified

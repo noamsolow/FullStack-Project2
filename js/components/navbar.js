@@ -64,7 +64,7 @@ function createNavbar(activePage = '') {
 function handleNavbarLogout() {
     if (confirm('Are you sure you want to logout?')) {
         logout();
-        window.location.href = 'login.html';
+        window.location.href = 'login-signup.html';
     }
 }
 
