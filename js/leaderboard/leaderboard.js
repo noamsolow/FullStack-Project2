@@ -12,9 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLeaderboard();
 });
 
-/**
- * Initialize the leaderboard page
- */
+// Initialize leaderboard page
 function initLeaderboard() {
     // Check session
     if (!requireAuth()) return;
@@ -28,12 +26,10 @@ function initLeaderboard() {
     setupEventListeners();
     
     // Load initial leaderboard
-    loadLeaderboard('game1');
+    loadLeaderboard(currentGame);
 }
 
-/**
- * Setup event listeners
- */
+// Setup event listeners for tab buttons
 function setupEventListeners() {
     // Tab buttons
     const tabButtons = document.querySelectorAll('.tab-btn');
@@ -57,7 +53,7 @@ function setupEventListeners() {
  * Load and display leaderboard for a specific game
  */
 function loadLeaderboard(gameId) {
-    const leaderboard = getLeaderboardData(gameId);
+    const leaderboard = getLeaderboard(gameId);
     
     // Update podium
     updatePodium(leaderboard);
@@ -157,9 +153,7 @@ function updateTable(leaderboard) {
     });
 }
 
-/**
- * Update the user's rank section
- */
+// Update current user's rank section
 function updateUserRank(leaderboard) {
     const yourRankSection = document.getElementById('yourRankSection');
     const yourRank = document.getElementById('yourRank');
@@ -185,18 +179,4 @@ function updateUserRank(leaderboard) {
     }
     
     yourRankSection.style.display = 'block';
-}
-
-/**
- * Get leaderboard data from localStorage
- */
-function getLeaderboardData(gameId) {
-    const leaderboard = localStorage.getItem('leaderboard');
-    if (!leaderboard) return [];
-    
-    const allLeaderboards = JSON.parse(leaderboard);
-    const gameLeaderboard = allLeaderboards[gameId] || [];
-    
-    // Sort by score descending
-    return gameLeaderboard.sort((a, b) => b.score - a.score);
 }

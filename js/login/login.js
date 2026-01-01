@@ -1,23 +1,17 @@
 /**
  * login.js - Authentication Logic (Compatible with existing system)
- * מטפל בהתחברות, רישום ואימות משתמשים
- * משתמש בפונקציות הקיימות מ-storage.js ו-auth.js
  */
 
 // Constants
-const MAX_LOGIN_ATTEMPTS = 3; // התאמה למערכת הקיימת
-const LOCKOUT_TIME = 15 * 60 * 1000; // 15 minutes
-
+const MAX_LOGIN_ATTEMPTS = 3; 
 
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
-    initAuth();
+document.addEventListener('DOMContentLoaded', () => { 
+    initAuth(); 
 });
 
-/**
- * Initialize authentication page
- */
+// Initialize authentication system
 function initAuth() {
     // Check if already logged in using existing checkSession
     if (checkSession()) {
@@ -29,12 +23,10 @@ function initAuth() {
     setupEventListeners();
     
     // Focus on first input
-    document.getElementById('loginUsername').focus();
+    document.getElementById('loginUsername').focus(); 
 }
 
-/**
- * Setup all event listeners
- */
+// Setup event listeners for forms and buttons
 function setupEventListeners() {
     // Form submissions
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
@@ -62,11 +54,9 @@ function setupEventListeners() {
     document.getElementById('registerConfirmPassword').addEventListener('input', validateConfirmPasswordRealtime);
 }
 
-/**
- * Handle login form submission
- */
+// Handle login form submission
 function handleLogin(e) {
-    e.preventDefault();
+    e.preventDefault(); 
     console.log('🔐 Login attempt started');
 
     const username = document.getElementById('loginUsername').value.trim();
@@ -164,9 +154,7 @@ function handleLogin(e) {
     }, 1500);
 }
 
-/**
- * Handle register form submission
- */
+// Handle registration form submission
 function handleRegister(e) {
     e.preventDefault();
 
@@ -253,9 +241,7 @@ function handleRegister(e) {
     }, 1500);
 }
 
-/**
- * Validate username
- */
+// Validate username
 function validateUsername(username) {
     const usernameError = document.getElementById('registerUsernameError');
     const usernameInput = document.getElementById('registerUsername');
@@ -277,9 +263,7 @@ function validateUsername(username) {
     return true;
 }
 
-/**
- * Validate email
- */
+// Validate email
 function validateEmail(email) {
     const emailError = document.getElementById('registerEmailError');
     const emailInput = document.getElementById('registerEmail');
@@ -296,9 +280,7 @@ function validateEmail(email) {
     return true;
 }
 
-/**
- * Validate password
- */
+// Validate password
 function validatePassword(password) {
     const passwordError = document.getElementById('registerPasswordError');
     const passwordInput = document.getElementById('registerPassword');
@@ -314,9 +296,7 @@ function validatePassword(password) {
     return true;
 }
 
-/**
- * Validate confirm password
- */
+// Validate confirm password
 function validateConfirmPassword(password, confirmPassword) {
     const confirmError = document.getElementById('registerConfirmPasswordError');
     const confirmInput = document.getElementById('registerConfirmPassword');
@@ -332,9 +312,7 @@ function validateConfirmPassword(password, confirmPassword) {
     return true;
 }
 
-/**
- * Real-time validation functions
- */
+// Real-time validation handlers
 function validateUsernameRealtime(e) {
     const username = e.target.value.trim();
     if (username.length > 0) {
@@ -364,9 +342,7 @@ function validateConfirmPasswordRealtime(e) {
     }
 }
 
-/**
- * Show/hide forms
- */
+// Show registration form
 function showRegisterForm() {
     document.getElementById('loginCard').classList.add('hidden');
     document.getElementById('registerCard').classList.remove('hidden');
@@ -389,9 +365,7 @@ function showLoginForm() {
     }, 100);
 }
 
-/**
- * Toggle password visibility
- */
+// Toggle password visibility
 function togglePasswordVisibility(inputId, buttonId) {
     const input = document.getElementById(inputId);
     const button = document.getElementById(buttonId);
@@ -405,9 +379,7 @@ function togglePasswordVisibility(inputId, buttonId) {
     }
 }
 
-/**
- * Show error message
- */
+// Show error message
 function showError(elementId, message) {
     const errorElement = document.getElementById(elementId);
     if (errorElement) {
@@ -419,9 +391,8 @@ function showError(elementId, message) {
     }
 }
 
-/**
- * Clear all errors
- */
+
+// Clear all errors
 function clearErrors() {
     const errorElements = document.querySelectorAll('.input-error');
     errorElements.forEach(el => {
@@ -443,28 +414,23 @@ function clearErrors() {
     }
 }
 
-/**
- * Show login warning with auto-scroll
- */
+// Show login warning message
 function showLoginWarning(message) {
     const warning = document.getElementById('loginWarning');
     if (warning) {
         warning.querySelector('.alert-text').textContent = message;
         warning.classList.remove('hidden');
         
-        // הוספת גלילה אוטומטית אל האלמנט
         warning.scrollIntoView({ 
-            behavior: 'smooth', // גלילה חלקה
-            block: 'center'      // מרכז את ההודעה במסך
+            behavior: 'smooth', // Smooth scroll
+            block: 'center'      // Center the message on screen
         });
         
         console.warn('⚠️ Warning:', message);
     }
 }
 
-/**
- * Show success message
- */
+// Show success message
 function showSuccess(message) {
     const alert = document.getElementById('successAlert');
     if (alert) {
@@ -474,4 +440,3 @@ function showSuccess(message) {
     }
 }
 
-console.log('✅ login.js loaded successfully');

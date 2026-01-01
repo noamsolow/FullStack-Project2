@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initProfilePage();
 });
 
-/**
- * Initialize the profile page
- */
+// Initialize profile page
 function initProfilePage() {
     // Check session
     if (!requireAuth()) return;
@@ -38,9 +36,7 @@ function initProfilePage() {
     setupEventListeners();
 }
 
-/**
- * Load user profile information
- */
+// Load user profile information
 function loadUserProfile() {
     // Set username and email
     document.getElementById('profileUsername').textContent = currentUser.username;
@@ -70,37 +66,22 @@ function loadUserProfile() {
     }
 }
 
-/**
- * Load overall statistics
- */
+//
 function loadOverallStats() {
     const allGameStats = getUserAllGameStats(currentUser.id);
-    
-    let totalGamesPlayed = 0;
-    let totalWins = 0;
-    let totalScore = 0;
-
-    // Aggregate stats from all games
-    for (const gameId in allGameStats) {
-        const gameStats = allGameStats[gameId];
-        totalGamesPlayed += gameStats.played || 0;
-        totalWins += gameStats.won || 0;
-        totalScore += gameStats.totalScore || 0;
-    }
+    const stats = getAggregatedUserStats(currentUser.id);
 
     // Count unlocked achievements based on actual criteria
     const totalAchievements = countUnlockedAchievements(allGameStats);
 
     // Update UI
-    document.getElementById('totalGamesPlayed').textContent = totalGamesPlayed;
-    document.getElementById('totalWins').textContent = totalWins;
-    document.getElementById('totalScore').textContent = totalScore.toLocaleString();
+    document.getElementById('totalGamesPlayed').textContent = stats.totalGamesPlayed;
+    document.getElementById('totalWins').textContent = stats.totalWins;
+    document.getElementById('totalScore').textContent = stats.totalScore.toLocaleString();
     document.getElementById('achievementCount').textContent = totalAchievements;
 }
 
-/**
- * Count unlocked achievements based on actual criteria
- */
+// Count unlocked achievements based on criteria
 function countUnlockedAchievements(allGameStats) {
     const achievementTitles = [
         'First Victory',
@@ -120,9 +101,7 @@ function countUnlockedAchievements(allGameStats) {
     return count;
 }
 
-/**
- * Load game-specific statistics
- */
+// Load stats for specific games
 function loadGameSpecificStats() {
     // Load Game 1 stats
     loadGameStats('game1', {
@@ -175,9 +154,7 @@ function loadGameStats(gameId, elementIds) {
     }
 }
 
-/**
- * Load achievements
- */
+// Load achievements
 function loadAchievements() {
     const allGameStats = getUserAllGameStats(currentUser.id);
     const unlockedAchievements = [];
@@ -235,18 +212,7 @@ function shouldUnlockAchievement(achievementTitle, allGameStats) {
  * Calculate overall stats from all games
  */
 function calculateOverallStats(allGameStats) {
-    let totalGamesPlayed = 0;
-    let totalWins = 0;
-    let highestScore = 0;
-
-    for (const gameId in allGameStats) {
-        const gameStats = allGameStats[gameId];
-        totalGamesPlayed += gameStats.played || 0;
-        totalWins += gameStats.won || 0;
-        highestScore = Math.max(highestScore, gameStats.highScore || 0);
-    }
-
-    return { totalGamesPlayed, totalWins, highestScore };
+    return getAggregatedUserStats(currentUser.id);
 }
 
 /**
@@ -303,9 +269,7 @@ function loadRecentActivity() {
     });
 }
 
-/**
- * Setup event listeners
- */
+// setup event listeners
 function setupEventListeners() {
     // Edit profile button
     document.getElementById('editProfileBtn').addEventListener('click', openEditModal);
@@ -323,19 +287,8 @@ function setupEventListeners() {
     document.getElementById('deleteAccountBtn').addEventListener('click', handleDeleteAccount);
 }
 
-/**
- * Handle logout
- */
-function handleLogout() {
-    if (confirm('Are you sure you want to logout?')) {
-        logout();
-        window.location.href = 'login.html';
-    }
-}
 
-/**
- * Open edit profile modal
- */
+// Open edit profile modal
 function openEditModal() {
     document.getElementById('editUsername').value = currentUser.username;
     document.getElementById('editEmail').value = currentUser.email || '';
@@ -370,8 +323,7 @@ function handleEditProfile(e) {
             alert('❌ Username is already taken. Please choose a different one.');
             return;
         }
-        // Update leaderboard with new username
-        updateLeaderboardUsername(currentUser.id, newUsername);
+
     }
 
     // Check if email is taken by another user
@@ -391,6 +343,8 @@ function handleEditProfile(e) {
         firstName: newFirstName,
         lastName: newLastName
     };
+        // Update leaderboard with new username
+    updateLeaderboardUsername(currentUser.id, newUsername);
 
     // Save to storage
     updateUser(currentUser.id, updatedUser);
@@ -402,17 +356,14 @@ function handleEditProfile(e) {
     updateNavbarUser();
     closeEditModal();
 
-    alert('✅ Profile updated successfully!');
 }
 
-/**
- * Handle export data - exports only current user's data
- */
+// Handle export data
 function handleExportData() {
     const data = exportUserData(currentUser.id);
     
     if (!data) {
-        alert('❌ Error exporting data. Please try again.');
+        alert(' Error exporting data. Please try again.');
         return;
     }
     
@@ -424,37 +375,23 @@ function handleExportData() {
     link.download = `game-hub-data-${currentUser.username}-${Date.now()}.json`;
     link.click();
 
-    alert('✅ Your data exported successfully!');
 }
 
-/**
- * Handle clear statistics
- */
+// Handle clear statistics
 function handleClearStats() {
     if (confirm('⚠️ Are you sure you want to clear all your game statistics? This cannot be undone!')) {
-        // Clear game stats for current user
-        const allStats = getAllGameStats();
-        delete allStats[currentUser.id];
-        localStorage.setItem('gameStats', JSON.stringify(allStats));
-
-        // Reload page
+        clearUserStats(currentUser.id);
         location.reload();
     }
 }
 
-/**
- * Handle delete account
- */
+// Handle delete account
 function handleDeleteAccount() {
     const confirmation = prompt('⚠️ WARNING: This will permanently delete your account and all data!\n\nType "DELETE" to confirm:');
     
     if (confirmation === 'DELETE') {
-        // Delete user
-        deleteUser(currentUser.id);
-        
-        // Clear session
+        deleteAllUserData(currentUser.id);
         logout();
-        
         alert('Account deleted successfully.');
         window.location.href = 'login.html';
     }

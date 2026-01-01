@@ -225,13 +225,11 @@ body {
 }
 
 .leaderboard-table tbody tr.current-user {
-    background: linear-gradient(90deg, #fff9e6 0%, #fffef0 100%);
+    background: linear-gradient(90deg, #ffcc92 0%, #ffcc92 100%);
     font-weight: bold;
 }
 
-.leaderboard-table tbody tr.current-user td {
-    border-color: #ffd700;
-}
+
 
 .leaderboard-table .rank-cell {
     font-weight: bold;

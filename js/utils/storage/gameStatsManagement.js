@@ -82,3 +82,57 @@ function initializeGameStats(userId, gameId) {
     return defaultStats;
 }
 
+// Get aggregated stats across all games for a user
+function getAggregatedUserStats(userId) {
+    const gameStats = getUserAllGameStats(userId);
+    
+    let totalGamesPlayed = 0;
+    let totalWins = 0;
+    let highestScore = 0;
+    let totalScore = 0;
+    
+    for (const gameId in gameStats) {
+        const game = gameStats[gameId];
+        totalGamesPlayed += game.played || 0;
+        totalWins += game.won || 0;
+        highestScore = Math.max(highestScore, game.highScore || 0);
+        totalScore += game.totalScore || 0;
+    }
+    
+    return { totalGamesPlayed, totalWins, highestScore, totalScore };
+}
+
+// Count unlocked achievements based on game stats
+function countAchievements(gameStats, totalGamesPlayed, totalWins, highestScore) {
+    let count = 0;
+    
+    // First Victory - Win your first game
+    if (totalWins >= 1) count++;
+    
+    // Code Master - Complete all levels in Code Runner
+    if (gameStats.game1 && (gameStats.game1.levelsBeat >= 5 || gameStats.game1.bestStreak >= 5)) count++;
+    
+    // Champion - Score over 1000 points
+    if (highestScore >= 1000) count++;
+    
+    // Dedicated Player - Play 10 games
+    if (totalGamesPlayed >= 10) count++;
+    
+    // Perfectionist - Complete a game without losing a life
+    for (const gameId in gameStats) {
+        if (gameStats[gameId].perfectGame) {
+            count++;
+            break;
+        }
+    }
+    
+    // On Fire - Win 5 games in a row
+    for (const gameId in gameStats) {
+        if (gameStats[gameId].winStreak >= 5) {
+            count++;
+            break;
+        }
+    }
+    
+    return count;
+}

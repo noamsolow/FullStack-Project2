@@ -4,10 +4,7 @@
  * Automatically creates and manages the navbar
  */
 
-/**
- * Create and inject navbar into the page
- * @param {string} activePage - Current page identifier ('games', 'profile', 'game1', 'game2')
- */
+// create a navbar component
 function createNavbar(activePage = '') {
     // Check if user is logged in
     const currentUser = getCurrentUser();
@@ -63,30 +60,15 @@ function createNavbar(activePage = '') {
     console.log('✅ Navbar created for page:', activePage);
 }
 
-/**
- * Handle logout from navbar
- */
+// Handle logout from navbar
 function handleNavbarLogout() {
     if (confirm('Are you sure you want to logout?')) {
-        // Get current user before logging out
-        const currentUser = getCurrentUser();
-        
-        // Save current page to localStorage with username as key
-        const currentPage = window.location.pathname.split('/').pop() || 'games.html';
-        if (currentUser && currentUser.username) {
-            const storageKey = `lastVisitedPage_${currentUser.username}`;
-            localStorage.setItem(storageKey, currentPage);
-            console.log('💾 Saved last visited page for', currentUser.username + ':', currentPage);
-        }
-        
         logout();
         window.location.href = 'login.html';
     }
 }
 
-/**
- * Update navbar user info (if navbar already exists)
- */
+// Update navbar user info (e.g., after username change)
 function updateNavbarUser() {
     const currentUser = getCurrentUser();
     
@@ -104,10 +86,7 @@ function updateNavbarUser() {
     }
 }
 
-/**
- * Highlight active page in navbar
- * @param {string} pageName - Page identifier
- */
+// Set active page in navbar
 function setActivePage(pageName) {
     const links = document.querySelectorAll('.nav-link');
     
@@ -121,53 +100,3 @@ function setActivePage(pageName) {
     });
 }
 
-/**
- * Add notification badge to navbar item
- * @param {string} itemName - 'games' or 'profile'
- * @param {number} count - Number to show in badge
- */
-function addNavbarBadge(itemName, count) {
-    const link = document.querySelector(`a[href="${itemName}.html"]`);
-    
-    if (!link) return;
-
-    // Remove existing badge if any
-    const existingBadge = link.querySelector('.nav-badge');
-    if (existingBadge) {
-        existingBadge.remove();
-    }
-
-    // Add new badge
-    if (count > 0) {
-        const badge = document.createElement('span');
-        badge.className = 'nav-badge';
-        badge.textContent = count;
-        link.appendChild(badge);
-    }
-}
-
-/**
- * Show quick stats in navbar (optional)
- */
-function showNavbarStats() {
-    const currentUser = getCurrentUser();
-    if (!currentUser) return;
-
-    const allGameStats = getUserAllGameStats(currentUser.id);
-    
-    let totalGamesPlayed = 0;
-    let newAchievements = 0;
-
-    for (const gameId in allGameStats) {
-        const gameStats = allGameStats[gameId];
-        totalGamesPlayed += gameStats.played || 0;
-        // Count achievements (you can track "new" ones separately)
-    }
-
-    // Add badge to profile if there are new achievements
-    if (newAchievements > 0) {
-        addNavbarBadge('profile', newAchievements);
-    }
-}
-
-console.log('✅ navbar.js loaded successfully');

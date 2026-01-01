@@ -99,6 +99,44 @@ function deleteUser(userId) {
     }
 }
 
+// Clear user's game statistics
+function clearUserStats(userId) {
+    try {
+        const allStats = JSON.parse(localStorage.getItem('gameStats') || '{}');
+        delete allStats[userId];
+        localStorage.setItem('gameStats', JSON.stringify(allStats));
+        console.log('✅ User stats cleared:', userId);
+        return true;
+    } catch (error) {
+        console.error('Error clearing user stats:', error);
+        return false;
+    }
+}
+
+// Delete all user data (account, stats, leaderboard entries)
+function deleteAllUserData(userId) {
+    try {
+        // Delete user account
+        deleteUser(userId);
+        
+        // Clear user stats
+        clearUserStats(userId);
+        
+        // Remove user's leaderboard entries
+        const allLeaderboards = JSON.parse(localStorage.getItem('leaderboard') || '{}');
+        for (const gameId in allLeaderboards) {
+            allLeaderboards[gameId] = allLeaderboards[gameId].filter(entry => entry.userId !== userId);
+        }
+        localStorage.setItem('leaderboard', JSON.stringify(allLeaderboards));
+        
+        console.log('✅ All user data deleted:', userId);
+        return true;
+    } catch (error) {
+        console.error('Error deleting all user data:', error);
+        return false;
+    }
+}
+
 // Export user's personal data as JSON (for profile export button)
 function exportUserData(userId) {
     try {

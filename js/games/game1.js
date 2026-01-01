@@ -1,7 +1,8 @@
-/**
- * game1.js - Code Runner Game Logic
- * A CodeMonkey-style coding puzzle game where players write code to move a monkey
- */
+
+// game1.js - Code Runner Game Logic
+// A CodeMonkey-style coding puzzle game where players write code to move a monkey
+//
+///
 
 // Game State
 const gameState = {
@@ -248,9 +249,7 @@ function initGame() {
     showStartScreen();
 }
 
-/**
- * Get all DOM elements
- */
+// Get and cache DOM elements
 function getDOMElements() {
     gameGrid = document.getElementById('gameGrid');
     codeEditor = document.getElementById('codeEditor');
@@ -276,18 +275,8 @@ function displayUserInfo() {
  * Load user stats
  */
 function loadUserStats() {
-    // Use the storage.js function with two parameters
     const userId = gameState.currentUser.id;
-    let stats = null;
-    
-    // Get stats from localStorage
-    const allStats = localStorage.getItem('gameStats');
-    if (allStats) {
-        const parsed = JSON.parse(allStats);
-        if (parsed[userId] && parsed[userId]['game1']) {
-            stats = parsed[userId]['game1'];
-        }
-    }
+    const stats = getGameStats(userId, 'game1');
     
     if (stats) {
         document.getElementById('highScore').textContent = stats.highScore || 0;
@@ -384,9 +373,7 @@ function setupEventListeners() {
     });
 }
 
-/**
- * Start the game
- */
+// Start the game
 function startGame() {
     hideStartScreen();
     gameState.isRunning = true;
@@ -400,9 +387,7 @@ function startGame() {
     updateUI();
 }
 
-/**
- * Load a specific level
- */
+// Load a specific level
 function loadLevel(levelIndex) {
     const levelSet = levels[gameState.difficulty];
     
@@ -440,9 +425,7 @@ function loadLevel(levelIndex) {
     logToConsole(`Collect ${gameState.bananas.length} banana(s)!`, 'info');
 }
 
-/**
- * Build the game grid
- */
+// Build the game grid
 function buildGrid(level) {
     gameGrid.innerHTML = '';
     gameGrid.style.gridTemplateColumns = `repeat(${level.gridSize}, 1fr)`;
@@ -491,9 +474,7 @@ function buildGrid(level) {
     placeMonkey();
 }
 
-/**
- * Place the monkey on the grid
- */
+// Place the monkey on the grid
 function placeMonkey() {
     // Remove existing monkey
     const existingMonkey = document.querySelector('.monkey');
@@ -510,9 +491,7 @@ function placeMonkey() {
     cell.appendChild(monkey);
 }
 
-/**
- * Run the user's code
- */
+// Run the user's code
 function runCode() {
     if (gameState.isExecuting) return;
     
@@ -546,9 +525,7 @@ function runCode() {
     }
 }
 
-/**
- * Parse user code into commands
- */
+// Parse user code into commands
 function parseCode(code) {
     const commands = [];
     
@@ -591,9 +568,7 @@ function parseCode(code) {
     return commands;
 }
 
-/**
- * Execute commands with animation
- */
+// Execute parsed commands sequentially
 function executeCommands(commands) {
     if (commands.length === 0) {
         checkWinCondition();
@@ -604,9 +579,7 @@ function executeCommands(commands) {
     executeNextCommand();
 }
 
-/**
- * Execute the next command in queue
- */
+// Execute the next command in the queue
 function executeNextCommand() {
     if (!gameState.isExecuting || gameState.executionQueue.length === 0) {
         gameState.isExecuting = false;
@@ -663,9 +636,7 @@ function executeNextCommand() {
     gameState.executionTimeout = setTimeout(executeNextCommand, 400);
 }
 
-/**
- * Move the monkey forward
- */
+// Move the monkey forward
 function moveMonkey() {
     const { x, y, direction } = gameState.monkey;
     let newX = x, newY = y;
@@ -702,9 +673,7 @@ function moveMonkey() {
     return { success: true, message: `Moved ${direction}` };
 }
 
-/**
- * Turn the monkey
- */
+// Turn the monkey left or right
 function turnMonkey(turnDirection) {
     const directions = ['up', 'right', 'down', 'left'];
     let currentIndex = directions.indexOf(gameState.monkey.direction);
@@ -719,9 +688,7 @@ function turnMonkey(turnDirection) {
     placeMonkey();
 }
 
-/**
- * Grab a banana at current position
- */
+// Grab a banana at the monkey's current position
 function grabBanana() {
     const { x, y } = gameState.monkey;
     const bananaIndex = gameState.bananas.findIndex(b => b.x === x && b.y === y);
@@ -743,18 +710,9 @@ function grabBanana() {
     return { success: true, message: '🍌 Got a banana!' };
 }
 
-/**
- * Check if monkey stepped on a banana (no auto-collect - must use grab())
- */
-function checkBananaCollection() {
-    // Bananas are no longer auto-collected
-    // Player must use grab() command to collect them
-    // This function is kept for potential future use (e.g., showing visual feedback)
-}
 
-/**
- * Check win condition
- */
+
+// Check win condition
 function checkWinCondition() {
     const level = levels[gameState.difficulty][gameState.currentLevel];
     const totalBananas = level.bananas.length;
@@ -767,9 +725,7 @@ function checkWinCondition() {
     }
 }
 
-/**
- * Level complete
- */
+// Level complete
 function levelComplete() {
     const level = levels[gameState.difficulty][gameState.currentLevel];
     
@@ -809,9 +765,7 @@ function levelComplete() {
     updateUI();
 }
 
-/**
- * Game complete
- */
+// Game complete
 function gameComplete() {
     document.getElementById('finalScore').textContent = gameState.score;
     document.getElementById('levelsCompleted').textContent = levels[gameState.difficulty].length;
@@ -822,9 +776,7 @@ function gameComplete() {
     showGameCompleteScreen();
 }
 
-/**
- * Next level
- */
+// Proceed to next level
 function nextLevel() {
     hideAllOverlays();
     gameState.currentLevel++;
@@ -832,17 +784,13 @@ function nextLevel() {
     updateUI();
 }
 
-/**
- * Replay current level
- */
+// Replay current level
 function replayLevel() {
     hideAllOverlays();
     resetLevel();
 }
 
-/**
- * Reset current level
- */
+// Reset current level
 function resetLevel() {
     const level = levels[gameState.difficulty][gameState.currentLevel];
     
@@ -861,26 +809,20 @@ function resetLevel() {
     buildGrid(level);
 }
 
-/**
- * Reset code editor
- */
+// Reset code editor
 function resetCode() {
     codeEditor.value = '';
     clearConsole();
     logToConsole('Code cleared. Ready to write!', 'info');
 }
 
-/**
- * Show hint
- */
+// Show hint
 function showHint() {
     const level = levels[gameState.difficulty][gameState.currentLevel];
     logToConsole(`💡 Hint: ${level.hint}`, 'info');
 }
 
-/**
- * Stop code execution
- */
+// Stop code execution
 function stopExecution() {
     gameState.isExecuting = false;
     gameState.executionQueue = [];
@@ -895,17 +837,13 @@ function stopExecution() {
     logToConsole('Execution stopped.', 'info');
 }
 
-/**
- * Update UI elements
- */
+// Check if monkey is on a banana to collect it
 function updateUI() {
     document.getElementById('score').textContent = gameState.score;
     document.getElementById('movesUsed').textContent = gameState.totalMoves;
 }
 
-/**
- * Console functions
- */
+// Log messages to console output
 function logToConsole(message, type = 'info') {
     const line = document.createElement('div');
     line.className = type;
@@ -918,9 +856,7 @@ function clearConsole() {
     consoleOutput.innerHTML = '';
 }
 
-/**
- * Screen management
- */
+// Overlay management
 function showStartScreen() {
     startScreen.classList.remove('hidden');
 }
@@ -949,21 +885,12 @@ function hideAllOverlays() {
     failScreen.classList.add('hidden');
 }
 
-/**
- * Save game statistics
- */
+// Save game statistics
 function saveGameStats() {
     const userId = gameState.currentUser.id;
     
-    // Get existing stats
-    let allStats = localStorage.getItem('gameStats');
-    allStats = allStats ? JSON.parse(allStats) : {};
-    
-    if (!allStats[userId]) {
-        allStats[userId] = {};
-    }
-    
-    const existingStats = allStats[userId]['game1'] || {
+    // Get existing stats using storage function
+    const existingStats = getGameStats(userId, 'game1') || {
         played: 0,
         won: 0,
         highScore: 0,
@@ -994,52 +921,24 @@ function saveGameStats() {
     }
     
     // Update levels beat - increment by 1 for each level completion
-    // Since saveGameStats is called once per level complete, just add 1
     if (!existingStats.totalLevelsCompleted) {
         existingStats.totalLevelsCompleted = 0;
     }
-    existingStats.totalLevelsCompleted += 1; // Add 1 for this level completion
+    existingStats.totalLevelsCompleted += 1;
     existingStats.levelsBeat = existingStats.totalLevelsCompleted;
-    existingStats.bestStreak = existingStats.totalLevelsCompleted; // Sync for profile page
+    existingStats.bestStreak = existingStats.totalLevelsCompleted;
     
-    // Save to localStorage
-    allStats[userId]['game1'] = existingStats;
-    localStorage.setItem('gameStats', JSON.stringify(allStats));
-    console.log('✅ Game stats saved for user:', userId);
+    // Save using storage function
+    updateGameStats(userId, 'game1', existingStats);
     
-    // Update leaderboard
-    let leaderboard = localStorage.getItem('leaderboard');
-    leaderboard = leaderboard ? JSON.parse(leaderboard) : {};
-    
-    if (!leaderboard['game1']) {
-        leaderboard['game1'] = [];
-    }
-    
-    // Check if user already has an entry, update if new score is higher
-    const existingEntryIndex = leaderboard['game1'].findIndex(e => e.userId === userId);
-    const newEntry = {
+    // Update leaderboard using storage function
+    addOrUpdateLeaderboardEntry('game1', {
         userId: userId,
         username: gameState.currentUser.username,
         score: gameState.score,
         difficulty: gameState.difficulty,
         date: new Date().toISOString()
-    };
-    
-    if (existingEntryIndex !== -1) {
-        // Update only if new score is higher
-        if (gameState.score > leaderboard['game1'][existingEntryIndex].score) {
-            leaderboard['game1'][existingEntryIndex] = newEntry;
-        }
-    } else {
-        leaderboard['game1'].push(newEntry);
-    }
-    
-    // Sort and keep top 10
-    leaderboard['game1'].sort((a, b) => b.score - a.score);
-    leaderboard['game1'] = leaderboard['game1'].slice(0, 10);
-    
-    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
-    console.log('✅ Leaderboard updated');
+    });
     
     // Update displayed stats
     loadUserStats();
