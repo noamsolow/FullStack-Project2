@@ -1,6 +1,5 @@
 /**
  * auth.js
- * Authentication and session management functions
  */
 
 
@@ -81,7 +80,7 @@ function logout() {
 // Require authentication to access page
 function requireAuth() {
     if (!checkSession()) {
-        window.location.replace('login.html');
+        window.location.replace('login.html'); 
         return false;
     }
     // Show the page content after auth verified
@@ -91,12 +90,7 @@ function requireAuth() {
 
 
 
-/**
- * Validate login credentials
- * @param {string} username - Username or email
- * @param {string} password - Password
- * @returns {Object|null} User object if valid, null otherwise
- */
+// Validate login credentials
 function validateLogin(username, password) {
     const users = getAllUsers();
     

@@ -17,7 +17,7 @@ body {
     color: #333;
 }
 
-/* Hide body until auth check completes (prevents flash on back navigation) */
+/* Visibility Classes for Authenticated Content */
 body.auth-required {
     visibility: hidden;
 }

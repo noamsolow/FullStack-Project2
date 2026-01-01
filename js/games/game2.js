@@ -152,6 +152,7 @@ function playAgain() {
  * Initialize new word
  */
 function initGame() {
+    if (!requireAuth()) return;
     // Select random word object
     const wordObj = WORDS[Math.floor(Math.random() * WORDS.length)];
     selectedWord = wordObj.word;
